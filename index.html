@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#040509">
-<title>VELO — Next Generation Live Streaming Platform</title>
+<meta name="theme-color" content="#030408">
+<title>VELO — Premium Isolated Stream Matrix</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -13,291 +13,282 @@
 
 <style>
 :root {
-  --background: #040509;
-  --surface: #0a0c16;
-  --surface-card: #121526;
-  --border-line: rgba(255, 255, 255, 0.05);
-  --color-accent: #2563eb;
+  --bg: #030408;
+  --surface: #090a12;
+  --surface-card: #101222;
+  --border: rgba(255, 255, 255, 0.05);
+  --accent: #2563eb;
   --accent-glow: rgba(37, 99, 235, 0.25);
-  --color-live: #ef4444;
-  --text-primary: #ffffff;
+  --live: #ef4444;
+  --text: #ffffff;
   --text-muted: #64748b;
-  --border-radius: 16px;
+  --radius: 16px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-html, body { background: var(--background); color: var(--text-primary); overflow-x: hidden; min-height: 100vh; }
+html, body { background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
 
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1;
-  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.1), transparent 50%);
+  background: radial-gradient(circle at 50% 0%, rgba(37, 99, 235, 0.08), transparent 50%);
 }
 
-.app-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 24px; }
-@media (max-width: 768px) { .app-container { padding: 12px; } }
+.wrapper { width: 100%; max-width: 1440px; margin: 0 auto; padding: 24px; }
+@media (max-width: 768px) { .wrapper { padding: 12px; } }
 
-/* Premium Navigation Header */
 header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 18px 24px; background: var(--surface); border: 1px solid var(--border-line);
-  border-radius: var(--border-radius); margin-bottom: 24px;
+  padding: 18px 24px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 24px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
-.brand-wrapper { display: flex; align-items: center; gap: 12px; }
-.brand-icon {
-  width: 38px; height: 38px; background: var(--color-accent); border-radius: 10px;
+.logo-pack { display: flex; align-items: center; gap: 12px; }
+.logo-box {
+  width: 38px; height: 38px; background: var(--accent); border-radius: 10px;
   display: grid; place-items: center; color: #fff; font-size: 16px;
   box-shadow: 0 0 20px var(--accent-glow);
 }
-.brand-logo-text { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
-.status-badge-container {
+.logo-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.engine-badge {
   display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
-  padding: 6px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border-line); border-radius: 30px;
+  padding: 6px 14px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 30px;
 }
-.pulse-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
+.pulse { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
 
-/* Dashboard Core Grid Layout */
-.dashboard-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
-@media (max-width: 1024px) { .dashboard-grid { grid-template-columns: 1fr; } }
+.main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+@media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
 
-/* Secure Advanced Player Architecture */
-.player-wrapper-card {
-  background: #000; border: 1px solid var(--border-line); border-radius: var(--border-radius);
+/* Ultra High-Isolation Player Box */
+.player-host-card {
+  background: #000; border: 1px solid var(--border); border-radius: var(--radius);
   overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative;
 }
-.media-viewport { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+.aspect-viewport { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
 
-/* The isolating wrapper to block unwanted design elements from source website */
-.media-viewport iframe {
+/* Dynamic Frame Scaling to isolate only the target video feed */
+.aspect-viewport iframe {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  border: 0; object-fit: cover; z-index: 10;
+  border: 0; object-fit: cover; z-index: 10; background: #000;
 }
 
-/* System Loader Interface */
-.viewport-loader {
-  position: absolute; inset: 0; background: #002; z-index: 20;
+.stage-loader {
+  position: absolute; inset: 0; background: #020306; z-index: 20;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   transition: opacity 0.4s ease;
 }
-.viewport-loader.hidden-state { opacity: 0; pointer-events: none; }
-.loading-spinner {
-  width: 42px; height: 42px; border: 3px solid rgba(255,255,255,0.05);
-  border-top-color: var(--color-accent); border-radius: 50%; animation: rotationLoop 0.8s linear infinite;
+.stage-loader.resolved { opacity: 0; pointer-events: none; }
+.spinner {
+  width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.05);
+  border-top-color: var(--accent); border-radius: 50%; animation: rotateLoop 0.8s linear infinite;
 }
-@keyframes rotationLoop { to { transform: rotate(360deg); } }
+@keyframes rotateLoop { to { transform: rotate(360deg); } }
 
-/* Player Sub-control Bar */
-.player-control-bar {
+.control-panel {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px; background: var(--surface); border-top: 1px solid var(--border-line); gap: 12px;
+  padding: 16px; background: var(--surface); border-top: 1px solid var(--border); gap: 12px;
 }
-.stream-details-block { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; min-width: 0; }
-#nowPlayingTitle { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
-.live-status-tag {
-  background: var(--color-live); color: #fff; font-size: 11px; font-weight: 800;
+.meta-block { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; min-width: 0; }
+#nowStreamingMeta { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #fff; }
+.live-tag {
+  background: var(--live); color: #fff; font-size: 11px; font-weight: 800;
   padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0;
 }
-.player-action-utilities { display: flex; gap: 8px; }
-.utility-btn {
-  background: var(--surface-card); border: 1px solid var(--border-line); color: var(--text-primary);
+.utility-actions { display: flex; gap: 8px; }
+.action-trigger {
+  background: var(--surface-card); border: 1px solid var(--border); color: var(--text);
   padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
   display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s ease;
 }
-.utility-btn:hover { background: var(--color-accent); border-color: var(--color-accent); }
+.action-trigger:hover { background: var(--accent); border-color: var(--accent); }
 
-/* Sidebar Control Panel */
-.sidebar-panel { display: flex; flex-direction: column; gap: 20px; }
-.panel-container-card {
-  background: var(--surface); border: 1px solid var(--border-line);
-  border-radius: var(--border-radius); padding: 20px;
-}
-.panel-headline { font-size: 15px; font-weight: 800; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); }
+.sidebar-deck { display: flex; flex-direction: column; gap: 20px; }
+.deck-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.deck-title { font-size: 15px; font-weight: 800; margin-bottom: 16px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); }
 
-.match-matrix-list { display: flex; flex-direction: column; gap: 12px; max-height: 480px; overflow-y: auto; }
-.match-matrix-list::-webkit-scrollbar { width: 4px; }
-.match-matrix-list::-webkit-scrollbar-thumb { background: var(--border-line); border-radius: 10px; }
+.matrix-list { display: flex; flex-direction: column; gap: 12px; max-height: 480px; overflow-y: auto; }
+.matrix-list::-webkit-scrollbar { width: 4px; }
+.matrix-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-/* Custom Row Item Cards */
-.match-node-item {
-  background: var(--surface-card); border: 1px solid var(--border-line);
+.matrix-item {
+  background: var(--surface-card); border: 1px solid var(--border);
   border-radius: 12px; padding: 14px; display: flex; align-items: center;
   justify-content: space-between; cursor: pointer; transition: all 0.2s ease;
   width: 100%; text-align: left; color: #fff;
 }
-.match-node-item:hover, .match-node-item.active-state {
-  border-color: var(--color-accent); background: rgba(37, 99, 235, 0.03);
+.matrix-item:hover, .matrix-item.active {
+  border-color: var(--accent); background: rgba(37, 99, 235, 0.03);
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
 }
-.team-meta-wrapper { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
-.team-meta-row { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.flag-asset-icon { width: 22px; height: 15px; object-fit: cover; border-radius: 2px; background: rgba(255,255,255,0.05); }
+.team-cluster { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+.team-node { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.flag-icon { width: 22px; height: 15px; object-fit: cover; border-radius: 2px; background: rgba(255,255,255,0.05); }
 
-.schedule-meta-block { text-align: right; display: flex; flex-direction: column; gap: 4px; min-width: 95px; flex-shrink: 0; }
-.time-stamp { font-size: 12px; font-weight: 800; color: var(--color-accent); }
-.date-stamp { font-size: 11px; color: var(--text-muted); font-weight: 600; }
-.badge-stamp {
+.schedule-cluster { text-align: right; display: flex; flex-direction: column; gap: 4px; min-width: 95px; flex-shrink: 0; }
+.time-label { font-size: 12px; font-weight: 800; color: var(--accent); }
+.date-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.badge-label {
   font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
   display: inline-block; text-transform: uppercase; text-align: center; margin-top: 2px; width: max-content; align-self: flex-end;
 }
-.badge-stamp.live-status { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
-.badge-stamp.upcoming-status { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+.badge-label.live-mode { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.badge-label.upcoming-mode { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
 
-.terminal-empty-state { text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 14px; }
+.fallback-state { text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 14px; }
 
 footer {
   text-align: center; margin-top: 40px; padding: 24px;
-  font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-line);
+  font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);
 }
 </style>
 </head>
 <body>
 
-<div class="app-container">
+<div class="wrapper">
   <header>
-    <div class="brand-wrapper">
-      <div class="brand-icon"><i class="fa-solid fa-satellite-dish"></i></div>
-      <div class="brand-logo-text">VELO</div>
+    <div class="logo-pack">
+      <div class="logo-box"><i class="fa-solid fa-server"></i></div>
+      <div class="logo-title">VELO</div>
     </div>
-    <div class="status-badge-container">
-      <div class="pulse-dot"></div>
-      <span>SECURE MATRIX STREAMING</span>
+    <div class="engine-badge">
+      <div class="pulse"></div>
+      <span>SCRAPER CORE LIVE</span>
     </div>
   </header>
 
-  <div class="dashboard-grid">
+  <div class="main-grid">
     <div class="stage-section">
-      <div class="player-wrapper-card" id="interactivePlayerContainer">
-        <div class="media-viewport">
-          <div class="viewport-loader" id="viewportLoader">
-            <div class="loading-spinner"></div>
+      <div class="player-host-card" id="playerViewContainer">
+        <div class="aspect-viewport">
+          <div class="stage-loader" id="stageLoader">
+            <div class="spinner"></div>
           </div>
-          <iframe id="isolatedVideoFrame" src="" allowfullscreen scrolling="no" allow="autoplay; encrypted-media" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+          <iframe id="scrapedVideoFrame" src="" allowfullscreen scrolling="no" allow="autoplay; encrypted-media" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
         </div>
         
-        <div class="player-control-bar">
-          <div class="stream-details-block">
-            <span class="live-status-tag" id="currentStatusTag">OFFLINE</span>
-            <span id="nowPlayingTitle">Awaiting channel selection from match matrix</span>
+        <div class="control-panel">
+          <div class="meta-block">
+            <span class="live-tag" id="nowStreamingStatus">OFFLINE</span>
+            <span id="nowStreamingMeta">Select a target match channel</span>
           </div>
-          <div class="player-action-utilities">
-            <button class="utility-btn" onclick="executeFullscreen()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+          <div class="utility-actions">
+            <button class="action-trigger" onclick="requestFullscreenView()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="sidebar-panel">
-      <div class="panel-container-card">
-        <div class="panel-headline">Match Matrix Grid</div>
-        <div class="match-matrix-list" id="matrixViewContainer">
-          <div class="terminal-empty-state">Establishing handshake with cloud spreadsheet matrix...</div>
+    <div class="sidebar-deck">
+      <div class="deck-card">
+        <div class="deck-title">Stream Matrix Hub</div>
+        <div class="matrix-list" id="matrixContainer">
+          <div class="fallback-state">Connecting to scraper synchronization network...</div>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 VELO Broadcast Networks. All Interface Modules Synchronized via Secure Sandbox Architecture.
+    &copy; 2026 VELO Broadcast Network. Dynamic Target Extraction Interface.
   </footer>
 </div>
 
 <script>
-const DATABASE_MATRIX_URL = "https://script.google.com/macros/s/AKfycbxgm_JBuPANgho_Hw7hPr1JXRdkvvChC784MaHifJpxQGnexVz8M5IN337bxcS7PximOA/exec";
+// !!! আপনার নতুন গুগল ওয়েব অ্যাপের URL-টি নিচের ডাবল কোটেশনের মাঝে বসাবেন !!!
+const SCRAPER_API_URL = "https://script.google.com/macros/s/AKfycby7P6Q1ThLh0AR6RYCc_z-a5hbTQq6qJO05Z8hHibvZLavlhXsMrK55EByN40vq4htw/exec";
 
-const isolatedVideoFrame = document.getElementById("isolatedVideoFrame");
-const viewportLoader = document.getElementById("viewportLoader");
-const nowPlayingTitle = document.getElementById("nowPlayingTitle");
-const currentStatusTag = document.getElementById("currentStatusTag");
-const matrixViewContainer = document.getElementById("matrixViewContainer");
+const scrapedVideoFrame = document.getElementById("scrapedVideoFrame");
+const stageLoader = document.getElementById("stageLoader");
+const nowStreamingMeta = document.getElementById("nowStreamingMeta");
+const nowStreamingStatus = document.getElementById("nowStreamingStatus");
+const matrixContainer = document.getElementById("matrixContainer");
 
-async function pullCloudMatrixFeeds() {
-  if(!DATABASE_MATRIX_URL || DATABASE_MATRIX_URL.includes("আপনার_গুগল_অ্যাপ")) {
-    matrixViewContainer.innerHTML = `<div class="terminal-empty-state" style="color:var(--color-live);">Configuration Error: Please assign your Google Web App URL token inside index.html source script.</div>`;
+async function initMatrixSynergy() {
+  if(!SCRAPER_API_URL || SCRAPER_API_URL.includes("আপনার_গুগল_অ্যাপ")) {
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Configuration Missing: Update your Script URL inside index.html.</div>`;
     return;
   }
 
   try {
-    const response = await fetch(DATABASE_MATRIX_URL);
-    const dataNodes = await response.json();
+    const res = await fetch(SCRAPER_API_URL);
+    const nodes = await res.json();
     
-    if(!dataNodes || dataNodes.length === 0) {
-      matrixViewContainer.innerHTML = `<div class="terminal-empty-state">No dynamic sports streams initialized inside database matrix rows.</div>`;
+    if(!nodes || nodes.length === 0) {
+      matrixContainer.innerHTML = `<div class="fallback-state">No streaming target active inside spreadsheet matrix.</div>`;
       return;
     }
 
-    matrixViewContainer.innerHTML = "";
+    matrixContainer.innerHTML = "";
     
-    dataNodes.forEach((node, index) => {
-      const mode = node.status ? node.status.trim().toUpperCase() : "UPCOMING";
-      const isLiveActive = mode === "LIVE";
+    nodes.forEach((node, idx) => {
+      const currentMode = node.status ? node.status.trim().toUpperCase() : "UPCOMING";
+      const isLiveNow = currentMode === "LIVE";
       
-      const actionItem = document.createElement("button");
-      actionItem.className = `match-node-item ${index === 0 ? 'active-state' : ''}`;
-      actionItem.setAttribute("data-target-stream", node.stream_url || "");
-      actionItem.setAttribute("data-meta-title", `${node.team1} vs ${node.team2}`);
-      actionItem.setAttribute("data-current-state", mode);
+      const itemBtn = document.createElement("button");
+      itemBtn.className = `matrix-item ${idx === 0 ? 'active' : ''}`;
+      itemBtn.setAttribute("data-scraped-url", node.stream_url || "");
+      itemBtn.setAttribute("data-label-title", `${node.team1} vs ${node.team2}`);
+      itemBtn.setAttribute("data-state-token", currentMode);
       
-      actionItem.innerHTML = `
-        <div class="team-meta-wrapper">
-          <div class="team-meta-row">
-            <img class="flag-asset-icon" src="${node.team1_flag || 'https://placehold.co/30x20?text=•'}" onerror="this.src='https://placehold.co/30x20?text=•'">
+      itemBtn.innerHTML = `
+        <div class="team-cluster">
+          <div class="team-node">
+            <img class="flag-icon" src="${node.team1_flag || 'https://placehold.co/30x20?text=•'}" onerror="this.src='https://placehold.co/30x20?text=•'">
             <span>${node.team1}</span>
           </div>
-          <div class="team-meta-row">
-            <img class="flag-asset-icon" src="${node.team2_flag || 'https://placehold.co/30x20?text=•'}" onerror="this.src='https://placehold.co/30x20?text=•'">
+          <div class="team-node">
+            <img class="flag-icon" src="${node.team2_flag || 'https://placehold.co/30x20?text=•'}" onerror="this.src='https://placehold.co/30x20?text=•'">
             <span>${node.team2}</span>
           </div>
         </div>
-        <div class="schedule-meta-block">
-          <div class="time-stamp">${node.time}</div>
-          <div class="date-stamp">${node.date}</div>
-          <span class="badge-stamp ${isLiveActive ? 'live-status' : 'upcoming-status'}">${mode}</span>
+        <div class="schedule-cluster">
+          <div class="time-label">${node.time}</div>
+          <div class="date-label">${node.date}</div>
+          <span class="badge-label ${isLiveNow ? 'live-mode' : 'upcoming-mode'}">${currentMode}</span>
         </div>
       `;
 
-      actionItem.onclick = () => routeStreamToViewport(actionItem);
-      matrixViewContainer.appendChild(actionItem);
+      itemBtn.onclick = () => renderExtractedFeed(itemBtn);
+      matrixContainer.appendChild(itemBtn);
     });
 
-    // Automatically trigger initialization of the first row matrix
-    if(dataNodes.length > 0) {
-      const standardNode = matrixViewContainer.querySelector(".match-node-item");
-      if(standardNode) routeStreamToViewport(standardNode);
+    if(nodes.length > 0) {
+      const activeNode = matrixContainer.querySelector(".matrix-item");
+      if(activeNode) renderExtractedFeed(activeNode);
     }
 
   } catch (error) {
     console.error("Matrix compilation error:", error);
-    matrixViewContainer.innerHTML = `<div class="terminal-empty-state" style="color:var(--color-live);">Synchronization Error: Failed to retrieve data packet from API engine.</div>`;
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Network Error: Handshake failed with database engine.</div>`;
   }
 }
 
-function routeStreamToViewport(targetElement) {
-  document.querySelectorAll(".match-node-item").forEach(el => el.classList.remove("active-state"));
-  targetElement.classList.add("active-state");
+function renderExtractedFeed(targetElement) {
+  document.querySelectorAll(".matrix-item").forEach(el => el.classList.remove("active"));
+  targetElement.classList.add("active");
 
-  const rawStreamTarget = targetElement.getAttribute("data-target-stream");
-  const parsedMetaTitle = targetElement.getAttribute("data-meta-title");
-  const stateToken = targetElement.getAttribute("data-current-state");
+  const streamSource = targetElement.getAttribute("data-scraped-url");
+  const coreLabel = targetElement.getAttribute("data-label-title");
+  const stateToken = targetElement.getAttribute("data-state-token");
 
-  viewportLoader.classList.remove("hidden-state");
+  stageLoader.classList.remove("resolved");
   
-  nowPlayingTitle.textContent = parsedMetaTitle;
-  currentStatusTag.textContent = stateToken;
-  currentStatusTag.style.background = stateToken === "LIVE" ? "var(--color-live)" : "var(--text-muted)";
+  nowStreamingMeta.textContent = coreLabel;
+  nowStreamingStatus.textContent = stateToken;
+  nowStreamingStatus.style.background = stateToken === "LIVE" ? "var(--live)" : "var(--text-muted)";
 
-  if(rawStreamTarget) {
-    isolatedVideoFrame.src = rawStreamTarget;
+  if(streamSource) {
+    scrapedVideoFrame.src = streamSource;
   } else {
-    isolatedVideoFrame.src = "about:blank";
+    scrapedVideoFrame.src = "about:blank";
   }
 
-  isolatedVideoFrame.onload = () => {
-    viewportLoader.classList.add("hidden-state");
+  scrapedVideoFrame.onload = () => {
+    stageLoader.classList.add("resolved");
   };
 }
 
-function executeFullscreen() {
-  const container = document.getElementById("interactivePlayerContainer");
+function requestFullscreenView() {
+  const container = document.getElementById("playerViewContainer");
   if (!document.fullscreenElement) {
     if (container.requestFullscreen) {
       container.requestFullscreen().then(() => {
@@ -305,17 +296,13 @@ function executeFullscreen() {
           screen.orientation.lock("landscape").catch(() => {});
         }
       });
-    } else if (container.webkitRequestFullscreen) {
-      container.webkitRequestFullscreen();
     }
   } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
+    document.exitFullscreen().catch(() => {});
   }
 }
 
-window.addEventListener("DOMContentLoaded", pullCloudMatrixFeeds);
+window.addEventListener("DOMContentLoaded", initMatrixSynergy);
 </script>
 </body>
 </html>
