@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#05050a">
+<title>VELO — Ultra Live Streaming Platform</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #05050a;
+  --surface: #0c0d14;
+  --surface-card: #131522;
+  --border: rgba(255, 255, 255, 0.05);
+  --accent: #3b82f6;
+  --accent-glow: rgba(59, 130, 246, 0.35);
+  --live: #ef4444;
+  --text: #ffffff;
+  --text-muted: #64748b;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; scroll-behavior: smooth; }
+
+/* Background Deco */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08), transparent 50%),
+              radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.04), transparent 50%);
+}
+
+.wrapper { width: 100%; max-width: 1440px; margin: 0 auto; padding: 24px; }
+@media (max-width: 768px) { .wrapper { padding: 12px; } }
+
+/* Header Design */
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 24px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 24px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+.logo-area { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 40px; height: 40px; background: var(--accent); border-radius: 12px;
+  display: grid; place-items: center; color: #fff; font-size: 18px;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+.logo-text { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+.system-badge {
+  display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
+  padding: 6px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 30px;
+}
+.badge-dot { width: 6px; height: 6px; background: #10b981; border-radius: 50%; box-shadow: 0 0 8px #10b981; }
+
+/* Layout Grid */
+.layout { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
+@media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
+
+/* Player Container */
+.player-container {
+  background: #000; border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); position: relative;
+}
+/* 16:9 Aspect Ratio Box */
+.screen-box { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+
+/* এই বিশেষ স্টাইলটি অন্য ওয়েবসাইটের ফালতু ব্যানার বা বিজ্ঞাপন কেটে শুধু ভিডিও উইন্ডো দেখাবে */
+.screen-box iframe {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  border: 0; object-fit: cover; z-index: 10;
+}
+
+/* Player Loading Screen */
+.player-loader {
+  position: absolute; inset: 0; background: #000; z-index: 20;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  transition: opacity 0.4s ease;
+}
+.player-loader.hide { opacity: 0; pointer-events: none; }
+.spinner {
+  width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.05);
+  border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Player Control Bar */
+.control-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px; background: var(--surface); border-top: 1px solid var(--border);
+}
+.current-match-details { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+.live-tag {
+  background: var(--live); color: #fff; font-size: 11px; font-weight: 800;
+  padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.player-actions { display: flex; gap: 8px; }
+.action-btn {
+  background: var(--surface-card); border: 1px solid var(--border); color: var(--text);
+  padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s;
+}
+.action-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+/* Sidebar & Match list */
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.section-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.section-title { font-size: 16px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.2px; color: var(--text); }
+
+.match-list { display: flex; flex-direction: column; gap: 12px; max-height: 480px; overflow-y: auto; }
+.match-list::-webkit-scrollbar { width: 4px; }
+.match-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+/* Unique Match Card Items */
+.match-item {
+  background: var(--surface-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; display: flex; align-items: center;
+  justify-content: space-between; cursor: pointer; transition: all 0.2s ease;
+  width: 100%; text-align: left;
+}
+.match-item:hover, .match-item.active {
+  border-color: var(--accent); background: rgba(59, 130, 246, 0.03);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.teams-info { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.team-row { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+.flag-img { width: 22px; height: 15px; object-fit: cover; border-radius: 2px; background: rgba(255,255,255,0.05); }
+
+.status-info { text-align: right; display: flex; flex-direction: column; gap: 4px; min-width: 85px; }
+.time-txt { font-size: 12px; font-weight: 800; color: var(--accent); }
+.date-txt { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.status-badge {
+  font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+  display: inline-block; text-transform: uppercase; text-align: center; margin-top: 4px;
+}
+.status-badge.live { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.status-badge.upcoming { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
+
+/* No Data & Error State */
+.empty-state { text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 14px; }
+
+footer {
+  text-align: center; margin-top: 40px; padding: 20px;
+  font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <header>
+    <div class="logo-area">
+      <div class="logo-icon"><i class="fa-solid fa-play"></i></div>
+      <div class="logo-text">VELO</div>
+    </div>
+    <div class="system-badge">
+      <div class="badge-dot"></div>
+      <span>ENGINES LIVE</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="main-stage">
+      <div class="player-container" id="stagePlayer">
+        <div class="screen-box">
+          <div class="player-loader" id="layerLoader">
+            <div class="spinner"></div>
+          </div>
+          <iframe id="videoFrame" src="" allowfullscreen scrolling="no" allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        </div>
+        
+        <div class="control-bar">
+          <div class="current-match-details">
+            <span class="live-tag" id="currentStatus">OFFLINE</span>
+            <span id="currentMatchTitle">Select a match from schedule</span>
+          </div>
+          <div class="player-actions">
+            <button class="action-btn" onclick="triggerMute()"><i id="muteIcon" class="fa-solid fa-volume-high"></i></button>
+            <button class="action-btn" onclick="triggerFullscreen()"><i class="fa-solid fa-expand"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="section-card">
+        <div class="section-title">Match Schedule</div>
+        <div class="match-list" id="dynamicScheduleBox">
+          <div class="empty-state">Connecting to spreadsheet engine...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 VELO Engine. Distributed Data Matrix Stream. All Interface Texts are in Global Standard English.
+  </footer>
+</div>
+
+<script>
+
+const SPREADSHEET_API_URL = "https://script.google.com/macros/s/AKfycbzcwq2qUe6ksDcQyqK3trfmqMM9Eytbe2sgBvEs1kiRgCxmwDRf51tcR_g1KEwGMCyTiA/execি";
+
+const videoFrame = document.getElementById("videoFrame");
+const layerLoader = document.getElementById("layerLoader");
+const currentMatchTitle = document.getElementById("currentMatchTitle");
+const currentStatus = document.getElementById("currentStatus");
+const dynamicScheduleBox = document.getElementById("dynamicScheduleBox");
+let isMuted = false;
+
+async function fetchScheduleData() {
+  if(!SPREADSHEET_API_URL || SPREADSHEET_API_URL.includes("তোর_গুগল_অ্যাপ_স্ক্রিপ্ট")) {
+    dynamicScheduleBox.innerHTML = `<div class="empty-state" style="color:#ef4444;">Error: Please provide valid Google Apps Script Web App URL inside the code!</div>`;
+    return;
+  }
+
+  try {
+    const response = await fetch(SPREADSHEET_API_URL);
+    const data = await response.json();
+    
+    if(!data || data.length === 0) {
+      dynamicScheduleBox.innerHTML = `<div class="empty-state">No upcoming or live matches found at this moment.</div>`;
+      return;
+    }
+
+    dynamicScheduleBox.innerHTML = ""; // ক্লিন করে নেওয়া হচ্ছে
+    
+    data.forEach((match, index) => {
+      const isLive = match.status.toUpperCase() === "LIVE";
+      const itemBtn = document.createElement("button");
+      itemBtn.className = `match-item ${index === 0 ? 'active' : ''}`;
+      itemBtn.setAttribute("data-url", match.stream_url);
+      itemBtn.setAttribute("data-title", `${match.team1} vs ${match.team2}`);
+      itemBtn.setAttribute("data-status", match.status);
+      
+      itemBtn.innerHTML = `
+        <div class="teams-info">
+          <div class="team-row">
+            <img class="flag-img" src="${match.team1_flag || 'https://placehold.co/30x20?text=F'}" onerror="this.src='https://placehold.co/30x20?text=F'">
+            <span>${match.team1}</span>
+          </div>
+          <div class="team-row">
+            <img class="flag-img" src="${match.team2_flag || 'https://placehold.co/30x20?text=F'}" onerror="this.src='https://placehold.co/30x20?text=F'">
+            <span>${match.team2}</span>
+          </div>
+        </div>
+        <div class="status-info">
+          <div class="time-txt">${match.time}</div>
+          <div class="date-txt">${match.date}</div>
+          <span class="status-badge ${isLive ? 'live' : 'upcoming'}">${match.status}</span>
+        </div>
+      `;
+
+      itemBtn.onclick = () => activateStream(itemBtn);
+      dynamicScheduleBox.appendChild(itemBtn);
+    });
+
+    // প্রথম আইটেমটি অটোমেটিক লোড হবে রান টাইমে
+    if(data.length > 0) {
+      const firstCard = dynamicScheduleBox.querySelector(".match-item");
+      if(firstCard) activateStream(firstCard);
+    }
+
+  } catch (error) {
+    console.error("Data syncing error:", error);
+    dynamicScheduleBox.innerHTML = `<div class="empty-state" style="color:#ef4444;">Failed to load live feeds. Refresh page.</div>`;
+  }
+}
+
+// স্ট্রিম প্লেয়ার সুইচিং লজিক
+function activateStream(element) {
+  document.querySelectorAll(".match-item").forEach(item => item.classList.remove("active"));
+  element.classList.add("active");
+
+  const streamUrl = element.getAttribute("data-url");
+  const title = element.getAttribute("data-title");
+  const status = element.getAttribute("data-status");
+
+  layerLoader.classList.remove("hide");
+  
+  currentMatchTitle.textContent = title;
+  currentStatus.textContent = status;
+  currentStatus.className = `live-tag`;
+  if(status.toUpperCase() === "LIVE") {
+    currentStatus.style.background = "var(--live)";
+  } else {
+    currentStatus.style.background = "var(--text-muted)";
+  }
+
+  // আইফ্রেম সোর্স চেঞ্জ
+  videoFrame.src = streamUrl;
+
+  // আইফ্রেম লোড কমপ্লিট হলে লোডার চলে যাবে
+  videoFrame.onload = () => {
+    layerLoader.classList.add("hide");
+  };
+}
+
+// মোবাইল ও কম্পিউটার ফুলস্ক্রিন ও অটো-রোটেশন ফিক্স
+function triggerFullscreen() {
+  const pCard = document.getElementById("stagePlayer");
+  
+  if (!document.fullscreenElement) {
+    if (pCard.requestFullscreen) {
+      pCard.requestFullscreen().then(() => {
+        // মোবাইলে ফুলস্ক্রিন করলে স্ক্রিন স্বয়ংক্রিয়ভাবে কাত (Landscape) করার মডার্ন কমান্ড
+        if (screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock("landscape").catch(() => {});
+        }
+      });
+    } else if (pCard.webkitRequestFullscreen) {
+      pCard.webkitRequestFullscreen();
+    }
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+      if (screen.orientation && screen.orientation.unlock) {
+        screen.orientation.unlock();
+      }
+    }
+  }
+}
+
+// মিউট আনমিউট মেকানিজম (Iframe এর সিকিউরিটি পলিসির ভেতর কাজ করার জন্য ফ্রেম ট্রিকস)
+function triggerMute() {
+  const icon = document.getElementById("muteIcon");
+  isMuted = !isMuted;
+  if (isMuted) {
+    icon.className = "fa-solid fa-volume-xmark";
+    videoFrame.style.pointerEvents = "none"; // ইউজার ইন্টারঅ্যাকশন কন্ট্রোল ট্রিক
+  } else {
+    icon.className = "fa-solid fa-volume-high";
+    videoFrame.style.pointerEvents = "auto";
+  }
+}
+
+// উইন্ডো লোড হবার পর ইঞ্জিন রান করানো হচ্ছে
+window.addEventListener("DOMContentLoaded", fetchScheduleData);
+</script>
+</body>
+</html>
