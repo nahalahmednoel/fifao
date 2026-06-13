@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#03050a">
-<title>VELO — Proxy Stream Matrix Engine</title>
+<meta name="theme-color" content="#020408">
+<title>VELO — Google AppScript Proxy Matrix Engine</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -13,9 +13,9 @@
 
 <style>
 :root {
-  --bg: #03050a;
-  --surface: #090b14;
-  --surface-card: #111424;
+  --bg: #020408;
+  --surface: #080a14;
+  --surface-card: #0f1224;
   --border: rgba(255, 255, 255, 0.05);
   --accent: #2563eb;
   --accent-glow: rgba(37, 99, 235, 0.25);
@@ -77,7 +77,7 @@ header {
   background: #000;
 }
 
-#proxyTargetFrame {
+#appscriptProxyFrame {
   position: absolute;
   border: 0;
   width: 100%;
@@ -86,7 +86,7 @@ header {
 }
 
 .stage-loader {
-  position: absolute; inset: 0; background: #03050a; z-index: 20;
+  position: absolute; inset: 0; background: #020408; z-index: 20;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   transition: opacity 0.4s ease;
 }
@@ -129,18 +129,13 @@ header {
   justify-content: space-between; cursor: pointer; transition: all 0.2s ease;
   width: 100%; text-align: left; color: #fff;
 }
-.matrix-item:hover, .matrix-item.active {
-  border-color: var(--accent); background: rgba(37, 99, 235, 0.03);
-}
+.matrix-item:hover, .matrix-item.active { border-color: var(--accent); background: rgba(37, 99, 235, 0.03); }
 .team-cluster { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
 .team-node { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .flag-icon { width: 22px; height: 15px; object-fit: cover; border-radius: 2px; background: rgba(255,255,255,0.05); }
 
 .schedule-cluster { text-align: right; display: flex; flex-direction: column; gap: 4px; }
-.badge-label {
-  font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 4px;
-  display: inline-block; text-transform: uppercase;
-}
+.badge-label { font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 4px; display: inline-block; text-transform: uppercase; }
 .badge-label.live-mode { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
 .badge-label.upcoming-mode { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
 
@@ -153,12 +148,12 @@ footer { text-align: center; margin-top: 40px; padding: 24px; font-size: 12px; c
 <div class="wrapper">
   <header>
     <div class="logo-pack">
-      <div class="logo-box"><i class="fa-solid fa-network-wired"></i></div>
+      <div class="logo-box"><i class="fa-solid fa-shield-halved"></i></div>
       <div class="logo-title">VELO</div>
     </div>
     <div class="engine-badge">
       <div class="pulse"></div>
-      <span>CORS PROXY BYPASS RUNNING</span>
+      <span>APPSCRIPT NATIVE PROXY LOADED</span>
     </div>
   </header>
 
@@ -170,13 +165,13 @@ footer { text-align: center; margin-top: 40px; padding: 24px; font-size: 12px; c
             <div class="spinner"></div>
           </div>
           <div class="crop-overlay-mask">
-            <iframe id="proxyTargetFrame" src="" allowfullscreen></iframe>
+            <iframe id="appscriptProxyFrame" src="" allowfullscreen></iframe>
           </div>
         </div>
         <div class="control-panel">
           <div class="meta-block">
             <span class="live-tag" id="nowStreamingStatus">OFFLINE</span>
-            <span id="nowStreamingMeta">Select a verified target node channel</span>
+            <span id="nowStreamingMeta">Select an authorized channel node</span>
           </div>
           <div class="utility-actions">
             <button class="action-trigger" onclick="requestFullscreenView()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
@@ -187,41 +182,41 @@ footer { text-align: center; margin-top: 40px; padding: 24px; font-size: 12px; c
 
     <div class="sidebar-deck">
       <div class="deck-card">
-        <div class="deck-title">Live Dynamic Matrix</div>
+        <div class="deck-title">Live Channel Registry</div>
         <div class="matrix-list" id="matrixContainer">
-          <div class="fallback-state">Connecting to spreadsheet script endpoint...</div>
+          <div class="fallback-state">Connecting to proxy database servers...</div>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 VELO Media Systems. Network Sandbox Layer Secured.
+    &copy; 2026 VELO Broadcast Platform. Secure Matrix Decryption Node Active.
   </footer>
 </div>
 
 <script>
-// !!! আপনার জেনারেট করা গুগল ওয়েব অ্যাপের URL লিংকটি নিচে বসিয়ে দিন !!!
-const PROXY_API_URL = "https://script.google.com/macros/s/AKfycbyb6-LJxnPY2da4oYvKyushifAdtsmxW60UpnMP2WBh0oXBjOrz5bKSFZXhR7X9hoj_sg/exec"; 
+// !!! আপনার জেনারেট করা শেষ গুগল ওয়েব অ্যাপের URL লিংকটি নিচে বসিয়ে দিন !!!
+const APPSCRIPT_MAIN_URL = "https://script.google.com/macros/s/AKfycbw37t91Rxakxo-h2z6nhWTtI1jwWi6LnQW3k4sr8nmQdWW8nebfy2LG8BY5jbq6k2AkJQ/exec"; 
 
-const proxyTargetFrame = document.getElementById("proxyTargetFrame");
+const appscriptProxyFrame = document.getElementById("appscriptProxyFrame");
 const stageLoader = document.getElementById("stageLoader");
 const nowStreamingMeta = document.getElementById("nowStreamingMeta");
 const nowStreamingStatus = document.getElementById("nowStreamingStatus");
 const matrixContainer = document.getElementById("matrixContainer");
 
-async function initProxySync() {
-  if(!PROXY_API_URL || PROXY_API_URL.includes("আপনার_গুগল_অ্যাপ")) {
-    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Configuration Missing: Embed your web app script token inside index.html</div>`;
+async function initSecureSync() {
+  if(!APPSCRIPT_MAIN_URL || APPSCRIPT_MAIN_URL.includes("আপনার_গুগল_অ্যাপ")) {
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Configuration Error: Please update APPSCRIPT_MAIN_URL endpoint token inside the index.html file.</div>`;
     return;
   }
 
   try {
-    const res = await fetch(PROXY_API_URL);
+    const res = await fetch(APPSCRIPT_MAIN_URL);
     const nodes = await res.json();
     
     if(!nodes || nodes.length === 0) {
-      matrixContainer.innerHTML = `<div class="fallback-state">No source nodes registered inside spreadsheet rows.</div>`;
+      matrixContainer.innerHTML = `<div class="fallback-state">No active channels cataloged inside the sheet data tier.</div>`;
       return;
     }
 
@@ -259,22 +254,22 @@ async function initProxySync() {
         </div>
       `;
 
-      itemBtn.onclick = () => applyProxyCrop(itemBtn);
+      itemBtn.onclick = () => applyAppscriptCropProxy(itemBtn);
       matrixContainer.appendChild(itemBtn);
     });
 
     if(nodes.length > 0) {
-      const firstRow = matrixContainer.querySelector(".matrix-item");
-      if(firstRow) applyProxyCrop(firstRow);
+      const activeHeadNode = matrixContainer.querySelector(".matrix-item");
+      if(activeHeadNode) applyAppscriptCropProxy(activeHeadNode);
     }
 
   } catch (error) {
-    console.error("Proxy network fault:", error);
-    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Handshake Refused: API response parsing failed.</div>`;
+    console.error("Master framework loading fault:", error);
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Handshake Refused: Server database endpoint offline.</div>`;
   }
 }
 
-function applyProxyCrop(element) {
+function applyAppscriptCropProxy(element) {
   document.querySelectorAll(".matrix-item").forEach(el => el.classList.remove("active"));
   element.classList.add("active");
 
@@ -295,20 +290,21 @@ function applyProxyCrop(element) {
   nowStreamingStatus.style.background = status === "LIVE" ? "var(--live)" : "var(--text-muted)";
 
   if(rawUrl) {
-    // Setting up an online proxy pipeline wrapper to completely strip frame-busting security layers
-    const bypassProxyUrl = "https://corsproxy.io/?" + encodeURIComponent(rawUrl);
-    proxyTargetFrame.src = bypassProxyUrl;
+    // Calling the internal Google App Script proxy directly to decrypt and fetch the page HTML seamlessly
+    const internalProxyUrl = APPSCRIPT_MAIN_URL + "?proxy_url=" + encodeURIComponent(rawUrl);
+    appscriptProxyFrame.src = internalProxyUrl;
     
-    proxyTargetFrame.style.width = `calc(100% + ${cLeft + cRight}px)`;
-    proxyTargetFrame.style.height = `calc(100% + ${cTop + cBottom}px)`;
-    proxyTargetFrame.style.top = `-${cTop}px`;
-    proxyTargetFrame.style.left = `-${cLeft}px`;
-    proxyTargetFrame.style.transform = `scale(${zoom})`;
+    // Exact structural cropping calculations using advanced layout matrices
+    appscriptProxyFrame.style.width = `calc(100% + ${cLeft + cRight}px)`;
+    appscriptProxyFrame.style.height = `calc(100% + ${cTop + cBottom}px)`;
+    appscriptProxyFrame.style.top = `-${cTop}px`;
+    appscriptProxyFrame.style.left = `-${cLeft}px`;
+    appscriptProxyFrame.style.transform = `scale(${zoom})`;
   } else {
-    proxyTargetFrame.src = "about:blank";
+    appscriptProxyFrame.src = "about:blank";
   }
 
-  proxyTargetFrame.onload = () => {
+  appscriptProxyFrame.onload = () => {
     stageLoader.classList.add("resolved");
   };
 }
@@ -324,7 +320,7 @@ function requestFullscreenView() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", initProxySync);
+window.addEventListener("DOMContentLoaded", initSecureSync);
 </script>
 </body>
 </html>
