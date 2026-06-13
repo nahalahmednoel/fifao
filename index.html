@@ -4,20 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#040509">
-<title>VELO — High Performance Stream Engine</title>
+<meta name="theme-color" content="#03050a">
+<title>VELO — Advanced Dynamic Overlay Engine</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
 <style>
 :root {
-  --bg: #040509;
-  --surface: #0a0c16;
-  --surface-card: #121526;
+  --bg: #03050a;
+  --surface: #090b14;
+  --surface-card: #111424;
   --border: rgba(255, 255, 255, 0.05);
   --accent: #2563eb;
   --accent-glow: rgba(37, 99, 235, 0.25);
@@ -60,21 +58,40 @@ header {
 .main-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; }
 @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
 
-/* Premium Native Video Stage Layout */
+/* Advanced Absolute Crop Matrix Module */
 .player-host-card {
   background: #000; border: 1px solid var(--border); border-radius: var(--radius);
   overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative;
 }
-.viewport-outer { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+.viewport-outer-container { 
+  position: relative; 
+  width: 100%; 
+  padding-top: 56.25%; /* Fixed 16:9 Cinema Aspect Bound */
+  background: #000; 
+  overflow: hidden; 
+}
 
-/* Native High-Performance HTML5 Video Engine Controls */
-.viewport-outer video {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  object-fit: contain; z-index: 10; background: #000;
+/* Master Overlay Layer that crops and locks the dimensions */
+.crop-overlay-mask {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  overflow: hidden;
+  z-index: 10;
+  background: #000;
+}
+
+/* Pure Native Webview Viewport Mapping */
+#nativeTargetFrame {
+  position: absolute;
+  border: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: top left;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .stage-loader {
-  position: absolute; inset: 0; background: #040509; z-index: 20;
+  position: absolute; inset: 0; background: #03050a; z-index: 20;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
   transition: opacity 0.4s ease;
 }
@@ -126,11 +143,9 @@ header {
 .flag-icon { width: 22px; height: 15px; object-fit: cover; border-radius: 2px; background: rgba(255,255,255,0.05); }
 
 .schedule-cluster { text-align: right; display: flex; flex-direction: column; gap: 4px; min-width: 95px; flex-shrink: 0; }
-.time-label { font-size: 12px; font-weight: 800; color: var(--accent); }
-.date-label { font-size: 11px; color: var(--text-muted); font-weight: 600; }
 .badge-label {
-  font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
-  display: inline-block; text-transform: uppercase; text-align: center; margin-top: 2px; width: max-content; align-self: flex-end;
+  font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 4px;
+  display: inline-block; text-transform: uppercase; text-align: center; width: max-content; align-self: flex-end;
 }
 .badge-label.live-mode { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
 .badge-label.upcoming-mode { background: rgba(255, 255, 255, 0.05); color: var(--text-muted); }
@@ -148,30 +163,32 @@ footer {
 <div class="wrapper">
   <header>
     <div class="logo-pack">
-      <div class="logo-box"><i class="fa-solid fa-play"></i></div>
+      <div class="logo-box"><i class="fa-solid fa-compress"></i></div>
       <div class="logo-title">VELO</div>
     </div>
     <div class="engine-badge">
       <div class="pulse"></div>
-      <span>HLS AUTO FILTER RUNNING</span>
+      <span>CSS OVERLAY CLIPPING ENGAGED</span>
     </div>
   </header>
 
   <div class="main-grid">
     <div class="stage-section">
       <div class="player-host-card" id="playerViewContainer">
-        <div class="viewport-outer">
+        <div class="viewport-outer-container">
           <div class="stage-loader" id="stageLoader">
             <div class="spinner"></div>
           </div>
           
-          <video id="html5StreamingEngine" controls autoplay playsinline></video>
+          <div class="crop-overlay-mask">
+            <iframe id="nativeTargetFrame" src="" allowfullscreen scrolling="no"></iframe>
+          </div>
         </div>
         
         <div class="control-panel">
           <div class="meta-block">
             <span class="live-tag" id="nowStreamingStatus">OFFLINE</span>
-            <span id="nowStreamingMeta">Select a live match stream node</span>
+            <span id="nowStreamingMeta">Select an authorized link matrix channel</span>
           </div>
           <div class="utility-actions">
             <button class="action-trigger" onclick="requestFullscreenView()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
@@ -182,42 +199,41 @@ footer {
 
     <div class="sidebar-deck">
       <div class="deck-card">
-        <div class="deck-title">Stream Engine Hub</div>
+        <div class="deck-title">Live Channel Matrix</div>
         <div class="matrix-list" id="matrixContainer">
-          <div class="fallback-state">Connecting to spreadsheet server grid...</div>
+          <div class="fallback-state">Connecting to spreadsheet configuration matrix...</div>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    &copy; 2026 VELO Broadcast Network. Secure HLS Pipeline System.
+    &copy; 2026 VELO Broadcasting Systems. All Structural Interfaces Fully Sandboxed and Masked.
   </footer>
 </div>
 
 <script>
 // !!! আপনার জেনারেট করা শেষ গুগল ওয়েব অ্যাপের URL লিংকটি নিচে বসিয়ে দিন !!!
-const STREAM_API_URL = "https://script.google.com/macros/s/AKfycbwYhrH6EjGdSEhaVaVycajiG_Lo5MKKTN2cvj0zRFJ0Cz-1FZUUrUw0-KeLEqsxPzviCQ/exec";
+const OVERLAY_API_URL = "https://script.google.com/macros/s/AKfycbyR3u21c0MIjsgIdVsjD5WvJA5iKN9gN8lluUMld3aoWdfNkSQsUVT_gLwyHHpvQkZixA/exec"; // উদাহরণস্বরূপ লিংক বসানো হয়েছে
 
-const html5StreamingEngine = document.getElementById("html5StreamingEngine");
+const nativeTargetFrame = document.getElementById("nativeTargetFrame");
 const stageLoader = document.getElementById("stageLoader");
 const nowStreamingMeta = document.getElementById("nowStreamingMeta");
 const nowStreamingStatus = document.getElementById("nowStreamingStatus");
 const matrixContainer = document.getElementById("matrixContainer");
-let activeHlsPipeline = null;
 
-async function executeSyncPipeline() {
-  if(!STREAM_API_URL || STREAM_API_URL.includes("আপনার_গুগল_অ্যাপ")) {
-    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Configuration Fault: Put your Web App URL inside the index.html file.</div>`;
+async function executeOverlaySync() {
+  if(!OVERLAY_API_URL || OVERLAY_API_URL.includes("আপনার_গুগল_অ্যাপ")) {
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Configuration Error: Insert Web App URL inside index.html file.</div>`;
     return;
   }
 
   try {
-    const res = await fetch(STREAM_API_URL);
+    const res = await fetch(OVERLAY_API_URL);
     const nodes = await res.json();
     
     if(!nodes || nodes.length === 0) {
-      matrixContainer.innerHTML = `<div class="fallback-state">No stream rows declared inside the network registry.</div>`;
+      matrixContainer.innerHTML = `<div class="fallback-state">No links established inside the spreadsheet row index.</div>`;
       return;
     }
 
@@ -229,9 +245,16 @@ async function executeSyncPipeline() {
       
       const itemBtn = document.createElement("button");
       itemBtn.className = `matrix-item ${idx === 0 ? 'active' : ''}`;
-      itemBtn.setAttribute("data-source-stream", node.stream_url || "");
-      itemBtn.setAttribute("data-label-title", `${node.team1} vs ${node.team2}`);
-      itemBtn.setAttribute("data-state-token", mode);
+      
+      // গুগল শিটের পাঠানো সাইজ এবং জুম ভ্যালুগুলো এট্রিবিউটে সেট করা হচ্ছে
+      itemBtn.setAttribute("data-url", node.stream_url || "");
+      itemBtn.setAttribute("data-title", `${node.team1} vs ${node.team2}`);
+      itemBtn.setAttribute("data-status", mode);
+      itemBtn.setAttribute("data-top", node.crop_top || "0");
+      itemBtn.setAttribute("data-bottom", node.crop_bottom || "0");
+      itemBtn.setAttribute("data-left", node.crop_left || "0");
+      itemBtn.setAttribute("data-right", node.crop_right || "0");
+      itemBtn.setAttribute("data-zoom", node.zoom_factor || "1");
       
       itemBtn.innerHTML = `
         <div class="team-cluster">
@@ -245,75 +268,62 @@ async function executeSyncPipeline() {
           </div>
         </div>
         <div class="schedule-cluster">
-          <div class="time-label">${node.time}</div>
-          <div class="date-label">${node.date}</div>
           <span class="badge-label ${isLiveNow ? 'live-mode' : 'upcoming-mode'}">${mode}</span>
         </div>
       `;
 
-      itemBtn.onclick = () => launchPipelineStream(itemBtn);
+      itemBtn.onclick = () => renderAbsoluteCrop(itemBtn);
       matrixContainer.appendChild(itemBtn);
     });
 
     if(nodes.length > 0) {
-      const baseNode = matrixContainer.querySelector(".matrix-item");
-      if(baseNode) launchPipelineStream(baseNode);
+      const standardRow = matrixContainer.querySelector(".matrix-item");
+      if(standardRow) renderAbsoluteCrop(standardRow);
     }
 
   } catch (error) {
-    console.error("Pipeline fetching matrix error:", error);
-    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Handshake Fault: API endpoint response failed.</div>`;
+    console.error("Matrix interface loading fault:", error);
+    matrixContainer.innerHTML = `<div class="fallback-state" style="color:var(--live);">Handshake Denied: Unable to fetch rows from spreadsheet script.</div>`;
   }
 }
 
-function launchPipelineStream(targetElement) {
+function renderAbsoluteCrop(element) {
   document.querySelectorAll(".matrix-item").forEach(el => el.classList.remove("active"));
-  targetElement.classList.add("active");
+  element.classList.add("active");
 
-  const streamSource = targetElement.getAttribute("data-source-stream");
-  const coreLabel = targetElement.getAttribute("data-label-title");
-  const stateToken = targetElement.getAttribute("data-state-token");
+  const url = element.getAttribute("data-url");
+  const title = element.getAttribute("data-title");
+  const status = element.getAttribute("data-status");
+  
+  // শিটের মানগুলো রিড করা
+  const cTop = parseInt(element.getAttribute("data-top") || "0");
+  const cBottom = parseInt(element.getAttribute("data-bottom") || "0");
+  const cLeft = parseInt(element.getAttribute("data-left") || "0");
+  const cRight = parseInt(element.getAttribute("data-right") || "0");
+  const zoom = parseFloat(element.getAttribute("data-zoom") || "1");
 
   stageLoader.classList.remove("resolved");
   
-  nowStreamingMeta.textContent = coreLabel;
-  nowStreamingStatus.textContent = stateToken;
-  nowStreamingStatus.style.background = stateToken === "LIVE" ? "var(--live)" : "var(--text-muted)";
+  nowStreamingMeta.textContent = title;
+  nowStreamingStatus.textContent = status;
+  nowStreamingStatus.style.background = status === "LIVE" ? "var(--live)" : "var(--text-muted)";
 
-  if (activeHlsPipeline) {
-    activeHlsPipeline.destroy();
-    activeHlsPipeline = null;
-  }
-
-  if (!streamSource) {
-    html5StreamingEngine.src = "";
-    stageLoader.classList.add("resolved");
-    return;
-  }
-
-  // Auto Adaptive HLS Rendering Matrix
-  if (Hls.isSupported()) {
-    activeHlsPipeline = new Hls({ maxMaxBufferLength: 30 });
-    activeHlsPipeline.loadSource(streamSource);
-    activeHlsPipeline.attachMedia(html5StreamingEngine);
-    activeHlsPipeline.on(Hls.Events.MANIFEST_PARSED, () => {
-      html5StreamingEngine.play().catch(() => {});
-      stageLoader.classList.add("resolved");
-    });
-    activeHlsPipeline.on(Hls.Events.ERROR, () => {
-      stageLoader.classList.add("resolved");
-    });
-  } 
-  else if (html5StreamingEngine.canPlayType('application/vnd.apple.mpegurl')) {
-    html5StreamingEngine.src = streamSource;
-    html5StreamingEngine.addEventListener('loadedmetadata', () => {
-      html5StreamingEngine.play().catch(() => {});
-      stageLoader.classList.add("resolved");
-    });
+  if(url) {
+    nativeTargetFrame.src = url;
+    
+    // সিএসএস ক্যালকুলেশন মেকানিজম: এটি মূল ফ্রেমটিকে বড় করে চারপাশ থেকে কেটে বাউন্ডারির বাইরে পাঠিয়ে দেবে
+    nativeTargetFrame.style.width = `calc(100% + ${cLeft + cRight}px)`;
+    nativeTargetFrame.style.height = `calc(100% + ${cTop + cBottom}px)`;
+    nativeTargetFrame.style.top = `-${cTop}px`;
+    nativeTargetFrame.style.left = `-${cLeft}px`;
+    nativeTargetFrame.style.transform = `scale(${zoom})`;
   } else {
-    // If not HLS format, treat as standard iframe source logic smoothly
-    stageLoader.classList.add("resolved");
+    nativeTargetFrame.src = "about:blank";
   }
+
+  nativeTargetFrame.onload = () => {
+    stageLoader.classList.add("resolved");
+  };
 }
 
 function requestFullscreenView() {
@@ -331,7 +341,7 @@ function requestFullscreenView() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", executeSyncPipeline);
+window.addEventListener("DOMContentLoaded", executeOverlaySync);
 </script>
 </body>
 </html>
